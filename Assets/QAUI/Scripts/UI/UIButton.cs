@@ -11,6 +11,8 @@ namespace QAUI
         private UIText _text;
         private Action _onClick;
 
+        public RectTransform RectTransform => gameObject.GetRectTransform();
+        
         public UIButton SetText(Action<UIText> applier)
         {
             applier(_text);
