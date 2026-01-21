@@ -328,6 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355935964}
+  - component: {fileID: 355935965}
   m_Layer: 0
   m_Name: Main Scene
   m_TagString: Untagged
@@ -350,6 +351,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &355935965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355935962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7486e5696db4df3ae048bcda5414c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448401145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,7 +2037,7 @@ MonoBehaviour:
   titleText: {fileID: 1417426123}
   backButton: {fileID: 941865329}
   homeButton: {fileID: 2071529947}
-  mainScene: {fileID: 0}
+  mainScene: {fileID: 355935965}
 --- !u!4 &1507396310
 Transform:
   m_ObjectHideFlags: 0

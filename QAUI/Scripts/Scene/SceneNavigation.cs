@@ -8,8 +8,6 @@ namespace QAUI
 {
     public class SceneNavigation : MonoBehaviour
     {
-        private const string UnitySceneName = "QAUI/Scene";
-
         [Header("UI")] 
         [SerializeField] private GameObject canvas;
         [SerializeField] private GameObject content;
@@ -66,7 +64,7 @@ namespace QAUI
             if (SceneHistory.Count > 0)
             {
                 _currentScene = SceneHistory.Pop();
-                SceneManager.LoadScene(UnitySceneName);
+                SceneManager.LoadScene(QAUIScene.RelativePath);
             }
             else
             {
@@ -81,7 +79,7 @@ namespace QAUI
             if (_currentScene == mainScene.GetType()) return;
 
             _currentScene = null;
-            SceneManager.LoadScene(UnitySceneName);
+            SceneManager.LoadScene(QAUIScene.RelativePath);
         }
 
         public static void ClearHistory() => SceneHistory.Clear();
@@ -93,7 +91,7 @@ namespace QAUI
             SceneHistory.Push(_currentScene);
             _currentScene = sceneType;
 
-            SceneManager.LoadScene(UnitySceneName);
+            SceneManager.LoadScene(QAUIScene.RelativePath);
         }
 
         internal void ShowDialog(IDialog dialogInstance)

@@ -45,7 +45,7 @@ namespace QAUI
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
             // Open the QAUI scene
-            var scene = EditorSceneManager.OpenScene(QAUIScene.Path, OpenSceneMode.Single);
+            var scene = EditorSceneManager.OpenScene(QAUIScene.RelativePath, OpenSceneMode.Single);
 
             GameObject mainSceneGameObject = GameObject.Find(QAUIScene.GameObject.MainScene);
             GameObject sceneManagerGameObject = GameObject.Find(QAUIScene.GameObject.SceneManager);

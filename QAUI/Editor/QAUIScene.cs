@@ -1,8 +1,15 @@
 #if UNITY_EDITOR
 
+using System.IO;
+using QAUI;
+
 internal static class QAUIScene
 {
-    public const string Path = "Assets/QAUI/Scene.unity";
+    public static readonly string RelativePath = Path.Combine(
+        FileUtil.GetRelativePackagePath(),
+        "Scenes",
+        "QAUIScene.unity"
+    );
 
     public static class GameObject
     {

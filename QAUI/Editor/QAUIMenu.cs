@@ -13,8 +13,8 @@ public static class QAUIMenu
     public static void AddSceneInBuild()
     {
         var scenes = EditorBuildSettings.scenes.ToList();
-        scenes.RemoveAll(scene => scene.path == QAUIScene.Path);
-        scenes.Insert(0, new EditorBuildSettingsScene(QAUIScene.Path, true));
+        scenes.RemoveAll(scene => scene.path == QAUIScene.RelativePath);
+        scenes.Insert(0, new EditorBuildSettingsScene(QAUIScene.RelativePath, true));
         EditorBuildSettings.scenes = scenes.ToArray();
     }
 
