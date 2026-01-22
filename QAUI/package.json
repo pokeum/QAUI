@@ -1,6 +1,6 @@
 {
     "name": "com.pokeum.qaui",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "displayName": "QAUI",
     "description": "A lightweight Unity UI SDK focused on code-driven QA UIs.",
     "unity": "2019.3"

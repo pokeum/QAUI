@@ -15,8 +15,8 @@ public static class QAUIMenu
         QAUIScene.CopyToAssetPath();
 
         var scenes = EditorBuildSettings.scenes.ToList();
-        scenes.RemoveAll(scene => scene.path == QAUIScene.AssetPath);
-        scenes.Insert(0, new EditorBuildSettingsScene(QAUIScene.AssetPath, true));
+        scenes.RemoveAll(scene => scene.path == Scene.AssetPath);
+        scenes.Insert(0, new EditorBuildSettingsScene(Scene.AssetPath, true));
         EditorBuildSettings.scenes = scenes.ToArray();
     }
 
