@@ -9,26 +9,20 @@ namespace QAUI
 {
     internal class MainSceneSelector : EditorWindow
     {
-        private const string Key = "QAUI.MainSceneSelector";
-
         private MonoScript Script { get; set; }
 
         private Type Type => Script?.GetClass();
 
         private void OnEnable()
         {
-            var guid = EditorPrefs.GetString(Key, string.Empty);
-            if (string.IsNullOrEmpty(guid)) return;
-
-            var path = AssetDatabase.GUIDToAssetPath(guid);
-            Script = AssetDatabase.LoadAssetAtPath<MonoScript>(path);
+            Script = QAUIScene.MainScene.Script;
         }
 
         private void OnGUI()
         {
             minSize = new Vector2(400, 100);
 
-            EditorGUILayout.LabelField(QAUIScene.GameObject.MainScene, EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(QAUIScene.MainScene.Name, EditorStyles.boldLabel);
             Script = (MonoScript)EditorGUILayout.ObjectField($"{typeof(Scene).FullName} Script", Script,
                 typeof(MonoScript), false);
 
@@ -38,7 +32,6 @@ namespace QAUI
                 if (GUILayout.Button("Select") && IsValidType())
                 {
                     Apply();
-                    SaveScript();
                     Close();
                 }
             }
@@ -64,8 +57,8 @@ namespace QAUI
             // Open the QAUI scene
             var scene = EditorSceneManager.OpenScene(QAUIScene.AssetPath, OpenSceneMode.Single);
 
-            var mainSceneGameObject = GameObject.Find(QAUIScene.GameObject.MainScene);
-            var sceneManagerGameObject = GameObject.Find(QAUIScene.GameObject.SceneManager);
+            var mainSceneGameObject = GameObject.Find(QAUIScene.MainScene.Name);
+            var sceneManagerGameObject = GameObject.Find(QAUIScene.SceneManager.Name);
             if (!mainSceneGameObject || !sceneManagerGameObject) return;
 
             // Remove old scene component
@@ -85,19 +78,6 @@ namespace QAUI
             // Save scene
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
-        }
-
-        private void SaveScript()
-        {
-            if (Script == null)
-            {
-                EditorPrefs.DeleteKey(Key);
-                return;
-            }
-
-            var path = AssetDatabase.GetAssetPath(Script);
-            var guid = AssetDatabase.AssetPathToGUID(path);
-            EditorPrefs.SetString(Key, guid);
         }
     }
 }
