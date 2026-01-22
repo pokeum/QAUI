@@ -14,7 +14,25 @@ This SDK allows you to create those UIs **programmatically**, reducing repetitiv
 
 ### 1️⃣ Install
 
-Place the `Assets/QAUI` folder under the **Assets** directory of your Unity project.
+#### Install via OpenUPM
+
+QAUI is available on
+[OpenUPM](https://openupm.com/packages/com.pokeum.qaui/):
+
+```shell
+openupm add com.pokeum.qaui
+```
+
+#### Install via git URL
+
+1. Open Package Manager
+2. Click on the + icon on the top left corner of the "Package Manager" screen
+3. Click on "Install package from git url..."
+4. Paste: https://github.com/pokeum/QAUI.git?path=QAUI
+
+#### Copy to the Assets Folder
+
+Place the `QAUI` folder under the **Assets** directory of your Unity project.
 
 | <img src="Document/Image/Install.png"  width="450"> |
 | -- |
