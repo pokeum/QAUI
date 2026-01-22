@@ -64,7 +64,7 @@ namespace QAUI
             if (SceneHistory.Count > 0)
             {
                 _currentScene = SceneHistory.Pop();
-                SceneManager.LoadScene(QAUIScene.RelativePath);
+                SceneManager.LoadScene(QAUIScene.AssetPath);
             }
             else
             {
@@ -79,7 +79,7 @@ namespace QAUI
             if (_currentScene == mainScene.GetType()) return;
 
             _currentScene = null;
-            SceneManager.LoadScene(QAUIScene.RelativePath);
+            SceneManager.LoadScene(QAUIScene.AssetPath);
         }
 
         public static void ClearHistory() => SceneHistory.Clear();
@@ -91,7 +91,7 @@ namespace QAUI
             SceneHistory.Push(_currentScene);
             _currentScene = sceneType;
 
-            SceneManager.LoadScene(QAUIScene.RelativePath);
+            SceneManager.LoadScene(QAUIScene.AssetPath);
         }
 
         internal void ShowDialog(IDialog dialogInstance)

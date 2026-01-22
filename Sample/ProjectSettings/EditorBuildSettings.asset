@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Packages/com.pokeum.qaui/Scenes/QAUI.unity
-    guid: 33b66c2ac384a4b9e9bfe6a0e92e3d1e
+    path: Assets/QAUI/Scene.unity
+    guid: f56d7313a2deb47928234596b927240e
   m_configObjects: {}

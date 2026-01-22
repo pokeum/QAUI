@@ -12,9 +12,11 @@ public static class QAUIMenu
     [MenuItem("QAUI/Add Scene In Build")]
     public static void AddSceneInBuild()
     {
+        QAUIScene.CopyToAssetPath();
+
         var scenes = EditorBuildSettings.scenes.ToList();
-        scenes.RemoveAll(scene => scene.path == QAUIScene.RelativePath);
-        scenes.Insert(0, new EditorBuildSettingsScene(QAUIScene.RelativePath, true));
+        scenes.RemoveAll(scene => scene.path == QAUIScene.AssetPath);
+        scenes.Insert(0, new EditorBuildSettingsScene(QAUIScene.AssetPath, true));
         EditorBuildSettings.scenes = scenes.ToArray();
     }
 
