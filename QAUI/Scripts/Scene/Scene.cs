@@ -1,9 +1,14 @@
+using System.IO;
 using UnityEngine;
 
 namespace QAUI
 {
     public abstract class Scene : MonoBehaviour
     {
+        internal const string SceneFile = "Scene.unity";
+
+        internal static readonly string AssetPath = Path.Combine("Assets", "QAUI", SceneFile);
+
         private SceneNavigation SceneNavigation => GetComponent<SceneNavigation>();
 
         public abstract string Title();

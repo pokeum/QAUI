@@ -7,23 +7,19 @@ using UnityEngine;
 
 internal static class QAUIScene
 {
-    private const string SceneFile = "Scene.unity";
-
-    public static readonly string AssetPath = Path.Combine("Assets", "QAUI", SceneFile);
-
     public static void CopyToAssetPath()
     {
-        var sourceFilePath = Path.Combine(QAUI.FileUtil.GetAbsolutePackagePath(), SceneFile);
-        if (sourceFilePath.Equals(AssetPath)) return;
+        var sourceFilePath = Path.Combine(QAUI.FileUtil.GetAbsolutePackagePath(), QAUI.Scene.SceneFile);
+        if (sourceFilePath.Equals(QAUI.Scene.AssetPath)) return;
 
-        var directory = Path.GetDirectoryName(AssetPath);
+        var directory = Path.GetDirectoryName(QAUI.Scene.AssetPath);
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
 
-        File.Copy(sourceFilePath, AssetPath, overwrite: true);
-        AssetDatabase.ImportAsset(AssetPath);
+        File.Copy(sourceFilePath, QAUI.Scene.AssetPath, overwrite: true);
+        AssetDatabase.ImportAsset(QAUI.Scene.AssetPath);
     }
 
     public static class MainScene
@@ -34,7 +30,7 @@ internal static class QAUIScene
         {
             get
             {
-                var scene = EditorSceneManager.OpenScene(AssetPath, OpenSceneMode.Additive);
+                var scene = EditorSceneManager.OpenScene(QAUI.Scene.AssetPath, OpenSceneMode.Additive);
 
                 try
                 {
