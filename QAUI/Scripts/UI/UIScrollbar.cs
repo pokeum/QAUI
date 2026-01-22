@@ -10,14 +10,14 @@ namespace QAUI
         private void Awake()
         {
             Component = gameObject.SafeAddComponent<Scrollbar>();
-            Image image = gameObject.SafeAddComponent<Image>();
+            var image = gameObject.SafeAddComponent<Image>();
             image.color = ColorManager.ParseColor("#80CCCCCC");
             gameObject.GetRectTransform().StretchHeightToParentRight(60);
 
             Component.direction = Scrollbar.Direction.BottomToTop;
 
             // Handle
-            UIImage handle = UIImage.Create(gameObject, "Handle")
+            var handle = UIImage.Create(gameObject, "Handle")
                 .SetColor(ColorManager.ParseColor("#999999"));
             handle.RectTransform.StretchToParent();
 

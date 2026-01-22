@@ -23,7 +23,7 @@ namespace QAUI
             get => Component.value;
             set => Component.value = value;
         }
-        
+
         public UIDropdown SetOptions(List<string> options)
         {
             Component.ClearOptions();
@@ -51,7 +51,7 @@ namespace QAUI
 
         public UIDropdown SetTemplateColor(ColorBlock colors)
         {
-            Toggle itemToggle = _item.GetComponent<Toggle>();
+            var itemToggle = _item.GetComponent<Toggle>();
             if (itemToggle != null) itemToggle.SetColors(colors);
             return this;
         }
@@ -85,7 +85,7 @@ namespace QAUI
 
             Component.captionText = _label.Component;
 
-            UIImage arrow = UIImage.Create(gameObject, "Arrow")
+            var arrow = UIImage.Create(gameObject, "Arrow")
                 .SetSprite(ResourceManager.GetSprite(Sprites.Icon.ArrowDropdown))
                 .SetColor(Color.black);
             arrow.RectTransform.AlignRightCenterToParent(60, 60, 10);
@@ -95,21 +95,18 @@ namespace QAUI
 
         private void CreateTemplate()
         {
-            _template = GameObjectManager.Create(gameObject, "Template",
-                typeof(ScrollRect), typeof(Image));
+            _template = GameObjectManager.Create(gameObject, "Template", typeof(ScrollRect), typeof(Image));
             _template.GetComponent<ScrollRect>().movementType = ScrollRect.MovementType.Clamped;
 
-            GameObject viewport = GameObjectManager.Create(_template, "Viewport",
-                typeof(Mask), typeof(Image));
+            var viewport = GameObjectManager.Create(_template, "Viewport", typeof(Mask), typeof(Image));
             viewport.GetRectTransform().StretchToParent();
 
-            GameObject content = GameObjectManager.Create(viewport, "Content",
-                typeof(RectTransform), typeof(VerticalLayoutGroup));
+            var content =
+                GameObjectManager.Create(viewport, "Content", typeof(RectTransform), typeof(VerticalLayoutGroup));
             content.GetRectTransform().ExpandDownFromParentTop(100);
             _template.GetComponent<ScrollRect>().content = content.GetRectTransform();
 
-            _item = GameObjectManager.Create(content, "Item",
-                typeof(Toggle), typeof(Image), typeof(LayoutElement));
+            _item = GameObjectManager.Create(content, "Item", typeof(Toggle), typeof(Image), typeof(LayoutElement));
             _item.GetComponent<Toggle>().targetGraphic = _item.GetComponent<Image>();
 
             _itemCheckmark = UIImage.Create(_item, "Item Checkmark")

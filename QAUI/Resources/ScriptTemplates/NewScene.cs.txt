@@ -1,0 +1,16 @@
+using System;
+using QAUI;
+using UnityEngine;
+
+public class #CLASSNAME# : Scene
+{
+    public override string Title()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Initialize(GameObject content)
+    {
+        throw new NotImplementedException();
+    }
+}

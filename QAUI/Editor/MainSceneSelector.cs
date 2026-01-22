@@ -9,64 +9,95 @@ namespace QAUI
 {
     internal class MainSceneSelector : EditorWindow
     {
-        private MonoScript _mainSceneScriptAsset;
+        private const string Key = "QAUI.MainSceneSelector";
+
+        private MonoScript Script { get; set; }
+
+        private Type Type => Script?.GetClass();
+
+        private void OnEnable()
+        {
+            var guid = EditorPrefs.GetString(Key, string.Empty);
+            if (string.IsNullOrEmpty(guid)) return;
+
+            var path = AssetDatabase.GUIDToAssetPath(guid);
+            Script = AssetDatabase.LoadAssetAtPath<MonoScript>(path);
+        }
 
         private void OnGUI()
         {
             minSize = new Vector2(400, 100);
 
             EditorGUILayout.LabelField(QAUIScene.GameObject.MainScene, EditorStyles.boldLabel);
-            _mainSceneScriptAsset =
-                (MonoScript)EditorGUILayout.ObjectField(
-                    $"{typeof(Scene).FullName} Script",
-                    _mainSceneScriptAsset,
-                    typeof(MonoScript),
-                    false
-                );
+            Script = (MonoScript)EditorGUILayout.ObjectField($"{typeof(Scene).FullName} Script", Script,
+                typeof(MonoScript), false);
 
-            EditorGUILayout.Space(10);
-            using (new EditorGUI.DisabledScope(!_mainSceneScriptAsset))
+            EditorGUILayout.Space();
+            using (new EditorGUI.DisabledScope(!Script))
             {
-                if (GUILayout.Button("Select")) SelectMainScene();
+                if (GUILayout.Button("Select") && IsValidType())
+                {
+                    Apply();
+                    SaveScript();
+                    Close();
+                }
             }
         }
 
-        private void SelectMainScene()
+        private bool IsValidType()
         {
-            Type newSceneType = _mainSceneScriptAsset?.GetClass();
-            if (newSceneType == null ||
-                !typeof(MonoBehaviour).IsAssignableFrom(newSceneType) ||
-                !typeof(Scene).IsAssignableFrom(newSceneType))
+            if (Type != null &&
+                typeof(MonoBehaviour).IsAssignableFrom(Type) &&
+                typeof(Scene).IsAssignableFrom(Type))
             {
-                _mainSceneScriptAsset = null;
-                return;
+                return true;
             }
 
+            Script = null;
+            return false;
+        }
+
+        private void Apply()
+        {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
             // Open the QAUI scene
             var scene = EditorSceneManager.OpenScene(QAUIScene.RelativePath, OpenSceneMode.Single);
 
-            GameObject mainSceneGameObject = GameObject.Find(QAUIScene.GameObject.MainScene);
-            GameObject sceneManagerGameObject = GameObject.Find(QAUIScene.GameObject.SceneManager);
+            var mainSceneGameObject = GameObject.Find(QAUIScene.GameObject.MainScene);
+            var sceneManagerGameObject = GameObject.Find(QAUIScene.GameObject.SceneManager);
             if (!mainSceneGameObject || !sceneManagerGameObject) return;
 
             // Remove old scene component
-            Scene oldSceneComponent = mainSceneGameObject.GetComponent<Scene>();
-            if (oldSceneComponent) Undo.DestroyObjectImmediate(oldSceneComponent);
+            GameObjectUtility.RemoveMonoBehavioursWithMissingScript(mainSceneGameObject);
+            foreach (var component in mainSceneGameObject.GetComponents<Component>())
+            {
+                if (component is Transform) continue;
+                Undo.DestroyObjectImmediate(component);
+            }
 
             // Add new scene component
-            Scene newSceneComponent = (Scene)Undo.AddComponent(mainSceneGameObject, newSceneType);
+            var newSceneComponent = (Scene)Undo.AddComponent(mainSceneGameObject, Type);
 
-            SceneNavigation sceneNavigation = sceneManagerGameObject.GetComponent<SceneNavigation>();
+            var sceneNavigation = sceneManagerGameObject.GetComponent<SceneNavigation>();
             if (sceneNavigation) sceneNavigation.mainScene = newSceneComponent;
 
             // Save scene
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
+        }
 
-            // close window
-            Close();
+        private void SaveScript()
+        {
+            if (Script == null)
+            {
+                EditorPrefs.DeleteKey(Key);
+                return;
+            }
+
+            var path = AssetDatabase.GetAssetPath(Script);
+            var guid = AssetDatabase.AssetPathToGUID(path);
+            EditorPrefs.SetString(Key, guid);
         }
     }
 }

@@ -8,10 +8,10 @@ namespace QAUI
         {
             if (hex.Length % 2 != 0) throw new ArgumentException("Hex string length must be even.");
 
-            int length = hex.Length / 2;
-            byte[] result = new byte[length];
+            var length = hex.Length / 2;
+            var result = new byte[length];
 
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 result[i] = hex.Substring(i * 2, 2).ToByte();
             }

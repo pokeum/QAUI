@@ -18,13 +18,16 @@ namespace QAUI
             Dialog
         }
 
+        private const string SceneFileName = "NewScene.cs";
+        private const string DialogFileName = "NewDialog.cs";
+
+        private const string ClassNameToken = "#CLASSNAME#";
+
         [MenuItem("Assets/Create/QAUI/Scene", false, 0)]
-        public static void CreateQAUIScene() =>
-            CreateWithInlineRename(Mode.Scene, "NewScene.cs");
+        public static void CreateQAUIScene() => CreateWithInlineRename(Mode.Scene, SceneFileName);
 
         [MenuItem("Assets/Create/QAUI/Dialog", false, 1)]
-        public static void CreateQAUIDialog() =>
-            CreateWithInlineRename(Mode.Dialog, "NewDialog.cs");
+        public static void CreateQAUIDialog() => CreateWithInlineRename(Mode.Dialog, DialogFileName);
 
         private static void CreateWithInlineRename(Mode mode, string defaultFileName)
         {
@@ -41,19 +44,23 @@ namespace QAUI
 
         private static string GetTargetPathWith(string fileName)
         {
-            string folder = "Assets";
+            string directory = null;
             var obj = Selection.activeObject;
             if (obj != null)
             {
-                string path = AssetDatabase.GetAssetPath(obj);
+                var path = AssetDatabase.GetAssetPath(obj);
                 if (!string.IsNullOrEmpty(path))
                 {
-                    if (Directory.Exists(path)) folder = path;
-                    else folder = Path.GetDirectoryName(path);
+                    directory = Directory.Exists(path) ? path : Path.GetDirectoryName(path);
                 }
             }
 
-            return AssetDatabase.GenerateUniqueAssetPath(Path.Combine(folder, fileName));
+            if (string.IsNullOrEmpty(directory))
+            {
+                directory = "Assets";
+            }
+
+            return AssetDatabase.GenerateUniqueAssetPath(Path.Combine(directory, fileName));
         }
 
         /** Handles the confirmed name */
@@ -63,12 +70,17 @@ namespace QAUI
             {
                 Enum.TryParse(resourceFile, out Mode mode);
 
-                string fileName = Path.GetFileNameWithoutExtension(pathName);
-                string className = GetValidClassName(mode, fileName);
+                var fileName = Path.GetFileNameWithoutExtension(pathName);
+                var className = GetValidClassName(mode, fileName);
 
-                string code = GenerateCode(mode, className);
+                var code = GenerateCode(mode, className);
 
-                Directory.CreateDirectory(Path.GetDirectoryName(pathName)!);
+                var directory = Path.GetDirectoryName(pathName);
+                if (!string.IsNullOrEmpty(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
                 File.WriteAllText(pathName, code);
 
                 AssetDatabase.ImportAsset(pathName);
@@ -85,46 +97,35 @@ namespace QAUI
             switch (mode)
             {
                 case Mode.Scene:
-                    return
-                        $@"using System;
-using QAUI;
-using UnityEngine;
-
-public class {className} : Scene
-{{
-    public override string Title()
-    {{
-        throw new NotImplementedException();
-    }}
-
-    public override void Initialize(GameObject content)
-    {{
-        throw new NotImplementedException();
-    }}
-}}";
+                    return LoadTemplateTextOrThrow($"{SceneFileName}.txt")
+                        .Replace(ClassNameToken, className);
                 case Mode.Dialog:
-                    return
-                        $@"using System;
-using QAUI;
-using UnityEngine;
-
-public class {className} : IDialog
-{{
-    public void Initialize(GameObject content)
-    {{
-        throw new NotImplementedException();
-    }}
-}}";
-                default: return string.Empty;
+                    return LoadTemplateTextOrThrow($"{DialogFileName}.txt")
+                        .Replace(ClassNameToken, className);
+                default:
+                    return string.Empty;
             }
         }
 
+        private static string LoadTemplateTextOrThrow(string fileName)
+        {
+            var filePath = Path.Combine(
+                FileUtil.GetAbsolutePackagePath(),
+                "Resources",
+                "ScriptTemplates",
+                fileName
+            );
+
+            return File.Exists(filePath)
+                ? File.ReadAllText(filePath)
+                : throw new FileNotFoundException("Script template file not found.", filePath);
+        }
 
         private static int _newClassIndex;
 
         private static string GetValidClassName(Mode mode, string fileName)
         {
-            string reserved = string.Join("|", new List<string>()
+            var reserved = string.Join("|", new List<string>()
             {
                 "abstract", "as",
                 "base", "bool", "break", "byte",
@@ -146,9 +147,10 @@ public class {className} : IDialog
                 "virtual", "void", "volatile",
                 "while"
             });
-            string pattern = $"^(?!(?:{reserved})$)@?[A-Za-z_][A-Za-z0-9_]*$";
-            if (!Regex.IsMatch(fileName, pattern)) return $"{mode.ToString()}Class{++_newClassIndex}";
-            return fileName;
+            var pattern = $"^(?!(?:{reserved})$)@?[A-Za-z_][A-Za-z0-9_]*$";
+            return !Regex.IsMatch(fileName, pattern)
+                ? $"{mode.ToString()}Class{++_newClassIndex}"
+                : fileName;
         }
     }
 }

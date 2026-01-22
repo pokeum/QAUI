@@ -59,7 +59,7 @@ namespace QAUI
             Component = gameObject.SafeAddComponent<Button>();
             Component.onClick.AddListener(OnClick);
 
-            Image background = gameObject.SafeAddComponent<Image>();
+            var background = gameObject.SafeAddComponent<Image>();
             background.sprite = ResourceManager.GetSprite(Sprites.Container);
             background.type = Image.Type.Sliced;
             Component.targetGraphic = background;

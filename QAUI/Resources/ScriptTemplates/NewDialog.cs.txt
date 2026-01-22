@@ -1,0 +1,11 @@
+using System;
+using QAUI;
+using UnityEngine;
+
+public class #CLASSNAME# : IDialog
+{
+    public void Initialize(GameObject content)
+    {
+        throw new NotImplementedException();
+    }
+}

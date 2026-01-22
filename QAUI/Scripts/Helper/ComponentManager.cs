@@ -16,7 +16,7 @@ namespace QAUI
 
         public static Component SafeAddComponent(this GameObject gameObject, System.Type componentType)
         {
-            Component component = gameObject.GetComponent(componentType);
+            var component = gameObject.GetComponent(componentType);
             return component != null ? component : gameObject.AddComponent(componentType);
         }
 

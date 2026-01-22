@@ -8,7 +8,7 @@ internal static class QAUIScene
     public static readonly string RelativePath = Path.Combine(
         FileUtil.GetRelativePackagePath(),
         "Scenes",
-        "QAUIScene.unity"
+        "QAUI.unity"
     );
 
     public static class GameObject

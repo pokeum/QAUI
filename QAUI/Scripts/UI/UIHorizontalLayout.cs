@@ -55,14 +55,14 @@ namespace QAUI
             _autoResizeWidth = value;
             return this;
         }
-        
+
         private void UpdateWidth()
         {
             if (_elementRectTransforms.Count < 1) return;
 
-            float totalElementsWidth = _elementRectTransforms.Sum(rectTransform => rectTransform.rect.width);
-            float totalPadding = Component.padding.horizontal;
-            float totalSpacing = Component.spacing * (_elementRectTransforms.Count - 1);
+            var totalElementsWidth = _elementRectTransforms.Sum(rectTransform => rectTransform.rect.width);
+            var totalPadding = Component.padding.horizontal;
+            var totalSpacing = Component.spacing * (_elementRectTransforms.Count - 1);
 
             RectTransform.Resize(width: totalElementsWidth + totalPadding + totalSpacing);
         }

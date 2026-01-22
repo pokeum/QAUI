@@ -91,7 +91,7 @@ namespace QAUI
         public static void Resize(this RectTransform rectTransform,
             float? width = null, float? height = null)
         {
-            Vector2 sizeDelta = rectTransform.sizeDelta;
+            var sizeDelta = rectTransform.sizeDelta;
 
             if (width.HasValue) sizeDelta.x = width.Value;
             if (height.HasValue) sizeDelta.y = height.Value;

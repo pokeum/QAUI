@@ -25,11 +25,11 @@ namespace QAUI
         public void LateUpdate()
         {
             // Calculate default size
-            float defaultWidth = _parentRectTransform.rect.width - (paddingLeft + paddingRight);
-            float defaultHeight = _parentRectTransform.rect.height - (paddingTop + paddingBottom);
+            var defaultWidth = _parentRectTransform.rect.width - (paddingLeft + paddingRight);
+            var defaultHeight = _parentRectTransform.rect.height - (paddingTop + paddingBottom);
 
             // Get content preferred size
-            float contentHeight = content.rect.height;
+            var contentHeight = content.rect.height;
 
             _rectTransform.Resize(defaultWidth, Mathf.Min(defaultHeight, contentHeight));
         }

@@ -42,12 +42,12 @@ namespace QAUI
             OnSwitch(Component.isOn);
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             Component.onValueChanged.RemoveListener(OnSwitch);
         }
 
-        void OnSwitch(bool isOn)
+        private void OnSwitch(bool isOn)
         {
             _handle.RectTransform.anchoredPosition = isOn ? _handlePosition * -1 : _handlePosition;
             _background.SetColor(

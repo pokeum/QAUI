@@ -28,8 +28,7 @@ namespace QAUI
             Component.movementType = ScrollRect.MovementType.Clamped;
 
             // Viewport
-            GameObject viewport = GameObjectManager.Create(gameObject, "Viewport",
-                typeof(Image), typeof(Mask));
+            var viewport = GameObjectManager.Create(gameObject, "Viewport", typeof(Image), typeof(Mask));
             viewport.GetRectTransform().StretchToParent();
             viewport.GetComponent<Mask>().showMaskGraphic = false;
 
@@ -45,7 +44,7 @@ namespace QAUI
             Component.horizontal = false;
 
             // Vertical scrollbar
-            UIScrollbar scrollbar = UIScrollbar.Create(gameObject, "Scrollbar");
+            var scrollbar = UIScrollbar.Create(gameObject, "Scrollbar");
             Component.verticalScrollbar = scrollbar.Component;
             Component.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.AutoHide;
         }

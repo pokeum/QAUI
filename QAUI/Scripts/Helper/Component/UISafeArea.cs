@@ -8,19 +8,17 @@ namespace QAUI
     {
         private RectTransform _rectTransform;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
-            Rect area = Screen.safeArea;
+            var area = Screen.safeArea;
 
             // Pixel size in screen space of the whole screen
-            Vector2 screenSize = new Vector2(Screen.width, Screen.height);
+            var screenSize = new Vector2(Screen.width, Screen.height);
 
             // Set anchors to percentages of the screen used
             _rectTransform.anchorMin = area.position / screenSize;

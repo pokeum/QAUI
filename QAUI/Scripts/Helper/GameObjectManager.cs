@@ -6,7 +6,7 @@ namespace QAUI
     {
         public static GameObject Create(GameObject root, string name, params System.Type[] components)
         {
-            GameObject obj = new GameObject(name);
+            var obj = new GameObject(name);
             obj.transform.SetParent(root.transform, false);
 
             foreach (var component in components)
@@ -24,11 +24,10 @@ namespace QAUI
         {
             foreach (Transform child in obj.transform)
             {
-                if (child.name.Equals(name))
-                {
-                    Object.Destroy(child.gameObject);
-                    return true;
-                }
+                if (!child.name.Equals(name)) continue;
+
+                Object.Destroy(child.gameObject);
+                return true;
             }
 
             return false;

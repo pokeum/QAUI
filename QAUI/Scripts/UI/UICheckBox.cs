@@ -44,11 +44,11 @@ namespace QAUI
                 .SetColor(ColorManager.ParseColor(Colors.Gray700));
             _label.RectTransform.StretchToParent(new RectOffset(0, 60, 0, 0));
 
-            UIImage background = UIImage.Create(gameObject, "Background")
+            var background = UIImage.Create(gameObject, "Background")
                 .SetSprite(ResourceManager.GetSprite(Sprites.ToggleBackgroundUp));
             background.RectTransform.AlignRightCenterToParent(50, 50, 0);
 
-            UIImage checkmark = UIImage.Create(background.gameObject, "Checkmark")
+            var checkmark = UIImage.Create(background.gameObject, "Checkmark")
                 .SetSprite(ResourceManager.GetSprite(Sprites.ToggleCheckmark));
             checkmark.RectTransform.Resize(30, 30);
 

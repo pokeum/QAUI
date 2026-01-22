@@ -18,7 +18,7 @@ namespace QAUI
             get => Component.text;
             set => Component.text = value;
         }
-        
+
         public UIInputField SetLabel(Action<UIText> applier)
         {
             applier(_label);
@@ -30,7 +30,7 @@ namespace QAUI
             applier(_input);
             return this;
         }
-        
+
         public UIInputField SetInteractable(bool interactable)
         {
             Component.interactable = interactable;
@@ -48,7 +48,7 @@ namespace QAUI
         {
             Component = gameObject.SafeAddComponent<InputField>();
 
-            Image background = gameObject.SafeAddComponent<Image>();
+            var background = gameObject.SafeAddComponent<Image>();
             background.color = ColorManager.ParseColor(Colors.Transparent);
 
             _label = UIText.Create(gameObject, "Label")
@@ -68,11 +68,11 @@ namespace QAUI
 
         private void OnRectTransformDimensionsChange()
         {
-            RectTransform rect = gameObject.GetRectTransform();
+            var rect = gameObject.GetRectTransform();
             if (rect == null) return;
 
-            float parentWidth = rect.rect.width;
-            float parentHeight = rect.rect.height;
+            var parentWidth = rect.rect.width;
+            var parentHeight = rect.rect.height;
 
             _label.RectTransform.AlignLeftCenterToParent((parentWidth - _padding) / 2f, parentHeight, 0);
             _input.RectTransform.AlignRightCenterToParent((parentWidth - _padding) / 2f, parentHeight, 0);

@@ -14,7 +14,7 @@ namespace QAUI
             get => Component.text;
             set => SetText(value);
         }
-        
+
         private bool _useContentHeight = false;
 
         public UIText UseContentHeight(bool value = true)
@@ -69,7 +69,7 @@ namespace QAUI
 
         private void OnRectTransformDimensionsChange()
         {
-            RectTransform rect = gameObject.GetRectTransform();
+            var rect = gameObject.GetRectTransform();
             if (rect == null) return;
 
             if (_useContentHeight)

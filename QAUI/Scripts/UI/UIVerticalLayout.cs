@@ -60,9 +60,9 @@ namespace QAUI
         {
             if (_elementRectTransforms.Count < 1) return;
 
-            float totalElementsHeight = _elementRectTransforms.Sum(rectTransform => rectTransform.rect.height);
-            float totalPadding = Component.padding.vertical;
-            float totalSpacing = Component.spacing * (_elementRectTransforms.Count - 1);
+            var totalElementsHeight = _elementRectTransforms.Sum(rectTransform => rectTransform.rect.height);
+            var totalPadding = Component.padding.vertical;
+            var totalSpacing = Component.spacing * (_elementRectTransforms.Count - 1);
 
             RectTransform.Resize(height: totalElementsHeight + totalPadding + totalSpacing);
         }

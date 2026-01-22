@@ -24,13 +24,13 @@ namespace QAUI
                     /* RRGGBB */
                     case 6:
                     {
-                        byte[] bytes = hex.ToBytes();
+                        var bytes = hex.ToBytes();
                         return new Color32(bytes[0], bytes[1], bytes[2], 0xFF);
                     }
                     /* AARRGGBB */
                     case 8:
                     {
-                        byte[] bytes = hex.ToBytes();
+                        var bytes = hex.ToBytes();
                         return new Color32(bytes[1], bytes[2], bytes[3], bytes[0]);
                     }
                 }
@@ -74,7 +74,7 @@ namespace QAUI
 
         internal UnityEngine.UI.ColorBlock Overwrite(UnityEngine.UI.ColorBlock colors)
         {
-            UnityEngine.UI.ColorBlock newColors = colors;
+            var newColors = colors;
 
             if (_normal.HasValue) newColors.normalColor = _normal.Value;
             if (_highlighted.HasValue) newColors.highlightedColor = _highlighted.Value;
